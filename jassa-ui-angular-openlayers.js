@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.0.1-SNAPSHOT - 2014-03-02
+ * Version: 0.0.1-SNAPSHOT - 2014-03-11
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.jassa-map-ol"]);
@@ -76,8 +76,10 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
                             var itemData = {
                                 id: doc.id
                             };
-                            
-                            mapWrapper.addWkt(doc.id, doc.wkt, itemData);// {fillColor: markerFillColor, strokeColor: markerStrokeColor});
+
+							var wkt = doc.wkt.getLiteralLexicalForm();
+
+                            mapWrapper.addWkt(doc.id, wkt, itemData);// {fillColor: markerFillColor, strokeColor: markerStrokeColor});
                             
                         });
                     });
