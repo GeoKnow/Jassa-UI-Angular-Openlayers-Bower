@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.0.1-SNAPSHOT - 2014-03-21
+ * Version: 0.0.1-SNAPSHOT - 2014-03-26
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.jassa-map-ol"]);
@@ -74,7 +74,8 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 
                         _(docs).each(function(doc) {
                             var itemData = {
-                                id: doc.id
+                                id: doc.id,
+                                config: config // Make the config object part of the marker's data
                             };
 
 							var wkt = doc.wkt.getLiteralLexicalForm();
