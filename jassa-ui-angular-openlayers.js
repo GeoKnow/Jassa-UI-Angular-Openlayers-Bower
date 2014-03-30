@@ -52,7 +52,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
         }, true);
         
 
-        var watchList = '[map.center, map.zoom, ObjectUtils.hashCode(dataSources)]'; //viewStateFetcher
+        var watchList = '[map.center, map.zoom, ObjectUtils.hashCode(sources)]'; //viewStateFetcher
         
         $scope.$watch(watchList, function() {
             //console.log('Map refresh: ' + Jassa.util.ObjectUtils.hashCode($scope.config));
@@ -66,7 +66,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
  
             mapWrapper.clearItems();
 
-            var dataSources = $scope.dataSources;
+            var dataSources = $scope.sources;
             
             
             var bounds = Jassa.geo.openlayers.MapUtils.getExtent($scope.map);
