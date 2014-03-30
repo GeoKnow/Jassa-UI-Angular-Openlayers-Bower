@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.0.1-SNAPSHOT - 2014-03-26
+ * Version: 0.0.1-SNAPSHOT - 2014-03-30
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.tpls", "ui.jassa.openlayers.jassa-map-ol"]);
@@ -26,7 +26,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
         $scope.ObjectUtils = Jassa.util.ObjectUtils;
         
         //var watchList = '[map.center, map.zoom, ObjectUtils.hashCode(config), viewStateFetcher]';
-        var watchList = '[map.center, map.zoom, ObjectUtils.hashCode(config)]'; //viewStateFetcher
+        var watchList = '[map.center, map.zoom, ObjectUtils.hashCode(config), ObjectUtils.hashCode(dataSources)]'; //viewStateFetcher
         
         $scope.$watch(watchList, function() {
             console.log('Map refresh: ' + Jassa.util.ObjectUtils.hashCode($scope.config));
@@ -40,12 +40,12 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
  
             mapWrapper.clearItems();
 
-            var configs = $scope.config;
+            var dataSources = $scope.dataSources;
             
             
             var bounds = Jassa.geo.openlayers.MapUtils.getExtent($scope.map);
             
-            _(configs).each(function(config) {
+            _(dataSources).each(function(config) {
 
                 var viewStateFetcher = config.viewStateFetcher || defaultViewStateFetcher;
                 
@@ -96,12 +96,13 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 //http://jsfiddle.net/A2G3D/1/
 .directive('jassaMapOl', function($parse) {
     return {
-        restrict: 'EA', // says that this directive is only for html elements
+        restrict: 'EA',
         replace: true,
         template: '<div></div>',
         controller: 'JassaMapOlCtrl',
         scope: {
             config: '=',
+            dataSources: '=',
             onSelect: '&select',
             onUnselect: '&unselect'
         },
@@ -169,7 +170,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
             
             //$(this.el).on("ssbmap2featureselect"
             $el.on('ssbmapfeatureselect', function(ev, data) {
-                console.log('args', arguments);
+                //console.log('args', arguments);
                 scope.onSelect({data: data});
             });
 
