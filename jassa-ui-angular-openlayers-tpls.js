@@ -129,7 +129,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
         controller: 'JassaMapOlCtrl',
         scope: {
             config: '=',
-            dataSources: '=',
+            sources: '=',
             onSelect: '&select',
             onUnselect: '&unselect'
         },
