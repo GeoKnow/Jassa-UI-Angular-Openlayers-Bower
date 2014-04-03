@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.0.1-SNAPSHOT - 2014-03-30
+ * Version: 0.0.1-SNAPSHOT - 2014-04-03
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.tpls", "ui.jassa.openlayers.jassa-map-ol"]);
