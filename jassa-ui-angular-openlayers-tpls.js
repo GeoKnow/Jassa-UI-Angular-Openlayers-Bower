@@ -8,7 +8,7 @@
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.tpls", "ui.jassa.openlayers.jassa-map-ol"]);
 angular.module("ui.jassa.openlayers.tpls", []);
 //TODO Move to some better place
-jassa.setOlMapCenter = function(map, config) {
+Jassa.setOlMapCenter = function(map, config) {
     var zoom = config.zoom;
 
     var center = config.center;
@@ -183,7 +183,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
             return;
         }
         
-        jassa.setOlMapCenter($scope.map, config);
+        Jassa.setOlMapCenter($scope.map, config);
     }, true);
     
 
@@ -226,7 +226,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
             
             scope.map = map;
 
-            jassa.setOlMapCenter(scope.map, scope.config);
+            Jassa.setOlMapCenter(scope.map, scope.config);
 
             // Status Div
             //<ul><li ng-repeat="item in loadingSources">{{item.id}}</li></ul>
