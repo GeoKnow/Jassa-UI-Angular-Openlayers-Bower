@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.9.0-SNAPSHOT - 2015-01-12
+ * Version: 0.9.0-SNAPSHOT - 2015-01-13
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.tpls", "ui.jassa.openlayers.jassa-map-ol"]);
@@ -79,7 +79,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 
         var p = dataSource.fetchData(bounds);
 
-        var result = p.pipe(function(items) {
+        var result = p.then(function(items) {
 
             items = _(items).compact();
 
@@ -120,7 +120,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 
         var promise = fetchDataFromSourceCore(dataSource, bounds);
 
-        var result = promise.pipe(function(items) {
+        var result = $q.when(promise).then(function(items) {
             if(idToState[dataSourceId].requestId != requestId) {
                 return;
             }
@@ -134,9 +134,9 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 
             jassa.util.ArrayUtils.addAll($scope.items, items);
 
-            if(!$scope.$$phase && !$scope.$root.$$phase) {
-                $scope.$apply();
-            }
+//            if(!$scope.$$phase && !$scope.$root.$$phase) {
+//                $scope.$apply();
+//            }
 
             return items;
         });
@@ -161,7 +161,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
         //    fetchDataFromSource
         //});
 
-        var result = jQuery.when.apply(window, promises).pipe(function() {
+        var result = jassa.util.PromiseUtils.all(promises).then(function() {
             var r = _(arguments).flatten(true);
             return r;
         });
