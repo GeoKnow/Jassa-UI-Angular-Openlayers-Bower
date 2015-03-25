@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.9.0-SNAPSHOT - 2015-02-18
+ * Version: 0.9.0-SNAPSHOT - 2015-03-25
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.jassa-map-ol"]);
@@ -37,7 +37,7 @@ Jassa.OpenLayersUtils = Jassa.OpenLayersUtils || {
 };
 
 
-angular.module('ui.jassa.openlayers.jassa-map-ol', [])
+angular.module('ui.jassa.openlayers.jassa-map-ol', ['dddi'])
 
 .controller('JassaMapOlCtrl', ['$scope', '$q', function($scope, $q) {
 
@@ -225,7 +225,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 }])
 
 //http://jsfiddle.net/A2G3D/1/
-.directive('jassaMapOl', ['$compile', function($compile) {
+.directive('jassaMapOl', ['$compile', '$dddi', function($compile, $dddi) {
     return {
         restrict: 'EA',
         replace: true,
@@ -233,7 +233,7 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
         controller: 'JassaMapOlCtrl',
         scope: {
             config: '=',
-            sources: '=',
+            rawSources: '=sources',
             onSelect: '&select',
             onUnselect: '&unselect'
         },
@@ -255,6 +255,29 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', [])
 
             var $elStatus = $compile(statusDivHtml)(scope);
             element.append($elStatus);
+
+
+            var dddi = $dddi(scope);
+
+            // If the datasource array changes,
+            // cancel all requests on these sources
+            // and wrap the sources of the new array
+            dddi.register('sources', ['@rawSources', function(rawSources) {
+                // Cancel any pending requests
+                if(scope.sources) {
+                    scope.sources.forEach(function(source) {
+                        source.cancelAll();
+                    });
+                }
+
+                var r = rawSources.map(function(source) {
+                    var r = jassa.util.PromiseUtils.lastRequestify(source);
+                    return r;
+                });
+
+                return r;
+            }]);
+
 
             /*
             var $;
