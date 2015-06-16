@@ -2,7 +2,7 @@
  * jassa-ui-angular
  * https://github.com/GeoKnow/Jassa-UI-Angular
 
- * Version: 0.9.0-SNAPSHOT - 2015-03-25
+ * Version: 0.9.0-SNAPSHOT - 2015-06-16
  * License: MIT
  */
 angular.module("ui.jassa.openlayers", ["ui.jassa.openlayers.jassa-map-ol"]);
@@ -312,12 +312,12 @@ angular.module('ui.jassa.openlayers.jassa-map-ol', ['dddi'])
             };
 
 
-            $el.on('ssbmapfeatureselect', function(ev, data) {
-                scope.onSelect({data: data});
+            $el.on('ssbmapfeatureselect', function(event, data) {
+                scope.onSelect({data: data, event: event});
             });
 
-            $el.on('ssbmapfeatureunselect', function(ev, data) {
-                scope.onUnselect({data: data});
+            $el.on('ssbmapfeatureunselect', function(event, data) {
+                scope.onUnselect({data: data, event: event});
             });
 
 
@@ -643,7 +643,8 @@ $.widget('custom.ssbMap', {
             onUnselect: function(feature) {
                 var data = feature.attributes;
 
-                var event = null;
+                //var event = null;
+                var event = jQuery.Event('click');
                 self._trigger('featureUnselect', event, data);
             },
 
@@ -676,7 +677,10 @@ $.widget('custom.ssbMap', {
                     self.map.setCenter(clickLonLat, nextZoom);
                 }
                 else {
-                    var event = null;
+                    //var event = null;
+                    var event = jQuery.Event('click');
+                    event.pageX = xy.x;
+                    event.pageY = xy.y;
                     self._trigger('featureSelect', event, data);
                 }
             }
